@@ -17,7 +17,7 @@ void displayMatches() {
     std::cout << "Matches: " << matchesArt << std::endl;
 }
 
-void playerTurn() {
+bool playerTurn() {
     std::cout << "Player, draw matches: [1, 2, or 3]" << std::endl;
     int drawnMatches = 0;
     std::cin >> drawnMatches;
@@ -30,9 +30,17 @@ void playerTurn() {
     matches -= drawnMatches;
 
     displayMatches();
+
+    if (matches < 1) {
+        std::cout << "AI won!" << endl;
+        aiScore += 1;
+        return false;
+    }
+
+    return true;
 }
 
-void aiTurn() {
+bool aiTurn() {
     int drawnMatches = 0;
     switch (matches % 4) {
         case 0:
@@ -53,29 +61,26 @@ void aiTurn() {
 
     matches -= drawnMatches;
     displayMatches();
+
+    if (matches < 1) {
+        std::cout << "Player won!" << endl;
+        playerScore += 1;
+        return false;
+    }
+    return true;
 }
 
 int main() {
     while (true) {
+        bool playing = true;
 
         std::cout << "Welcome to Nim, starting new game..." << std::endl;
 
-        while (true) {
-            playerTurn();
+        while (playing) {
+            playing = playerTurn();
 
-            if (matches < 1) {
-                std::cout << "AI won!" << endl;
-                aiScore += 1;
-                break;
-            }
-
-            aiTurn();
-
-            if (matches < 1) {
-                std::cout << "Player won!" << endl;
-                playerScore += 1;
-                break;
-            }
+            if (playing)
+                playing = aiTurn();
         }
         break;
     }
