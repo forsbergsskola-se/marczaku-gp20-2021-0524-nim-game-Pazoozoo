@@ -1,10 +1,44 @@
 #include <iostream>
+#include <stdlib.h>
+#include <algorithm>
+
 using namespace std;
 
 int main() {
     int playerScore = 0;
     int aiScore = 0;
-    cout << "Hello World!" << endl;
+
+    while (true) {
+        int matches = 24;
+
+        std::cout << "Welcome to Nim, starting new game..." << std::endl;
+
+        while (true) {
+            string displayMatches = "";
+            std::cout << "Player, draw matches: [1, 2, or 3]" << std::endl;
+            int drawnMatches = 0;
+            std::cin >> drawnMatches;
+            drawnMatches = std::clamp(drawnMatches, 1, 3);
+
+            if (drawnMatches > matches) 
+                drawnMatches = matches;
+            
+            std::cout << "Player draws " << drawnMatches << std::endl;
+            matches -= drawnMatches;
+
+            for (int i = 0; i < matches; i++)
+                displayMatches += "|";
+
+            std::cout << "Matches: " << displayMatches << std::endl;
+
+            if (matches < 1) {
+                std::cout << "AI won!" << endl;
+                aiScore += 1;
+                break;
+            }
+        }
+        break;
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
