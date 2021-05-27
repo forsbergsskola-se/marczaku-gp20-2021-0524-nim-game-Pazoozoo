@@ -31,13 +31,12 @@ bool playerTurn() {
 
     displayMatches();
 
-    if (matches < 1) {
-        std::cout << "AI won!" << endl;
-        aiScore += 1;
-        return false;
-    }
-
-    return true;
+    if (matches > 0) 
+        return true;
+    
+    std::cout << "AI won!" << endl;
+    aiScore += 1;
+    return false;
 }
 
 bool aiTurn() {
@@ -62,12 +61,12 @@ bool aiTurn() {
     matches -= drawnMatches;
     displayMatches();
 
-    if (matches < 1) {
-        std::cout << "Player won!" << endl;
-        playerScore += 1;
-        return false;
-    }
-    return true;
+    if (matches > 0) 
+        return true;
+    
+    std::cout << "Player won!" << endl;
+    playerScore += 1;
+    return false;
 }
 
 int main() {
