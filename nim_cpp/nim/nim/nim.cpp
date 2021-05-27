@@ -1,8 +1,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <algorithm>
-
-using namespace std;
+#include <string>
+#include <ctype.h>
+#include <sstream>
 
 int playerScore = 0;
 int aiScore = 0;
@@ -10,17 +11,19 @@ int matches = 24;
 int drawnMatches = 0;
 
 void displayMatches() {
-    string matchesArt = "";
+    std::string matchesArt = "";
 
     for (int i = 0; i < matches; i++)
         matchesArt += "|";
 
-    std::cout << "Matches: " << matchesArt << std::endl;
+    std::cout << "Matches: " << matchesArt << "\n" << std::endl;
 }
 
 bool playerTurn() {
+    std::string input = "";
     std::cout << "Player, draw matches: [1, 2, or 3]" << std::endl;
-    std::cin >> drawnMatches;
+    std::cin >> input;
+    drawnMatches = std::stoi(input);
     drawnMatches = std::clamp(drawnMatches, 1, 3);
 
     if (drawnMatches > matches)
@@ -34,7 +37,7 @@ bool playerTurn() {
     if (matches > 0) 
         return true;
     
-    std::cout << "AI won!" << endl;
+    std::cout << "AI won!" << std::endl;
     aiScore += 1;
     return false;
 }
@@ -46,7 +49,6 @@ bool aiTurn() {
             break;
         case 1:
             drawnMatches = std::rand() % 3 + 1;
-            std::cout << "random draw: " << drawnMatches << endl;
             break;
         case 2:
             drawnMatches = 1;
@@ -63,16 +65,17 @@ bool aiTurn() {
     if (matches > 0) 
         return true;
     
-    std::cout << "Player won!" << endl;
+    std::cout << "Player won!" << std::endl;
     playerScore += 1;
     return false;
 }
 
 int main() {
     while (true) {
-        bool playing = true;
+        bool playing = 1;
+        matches = 24;
 
-        std::cout << "Welcome to Nim, starting new game..." << std::endl;
+        std::cout << "\nWelcome to Nim, starting new game...\n" << std::endl;
 
         while (playing) {
             playing = playerTurn();
@@ -80,18 +83,18 @@ int main() {
             if (playing)
                 playing = aiTurn();
         }
+        
+        std::cout << "\nScore: \n" << "  Player: " << playerScore << "\n  AI: " << aiScore << std::endl;
+        std::cout << "\nEnter 1 to play again, or 2 to exit game" << std::endl;
+
+        std::string input = "";
+        std::cin >> input;
+        int response = std::stoi(input);
+
+        if (response != 2)
+            continue;
+
+        std::cout << "\nExiting game..." << std::endl;
         break;
     }
 }
-
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
