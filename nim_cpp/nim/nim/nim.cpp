@@ -26,9 +26,32 @@ void playerTurn() {
     if (drawnMatches > matches)
         drawnMatches = matches;
 
-    std::cout << "Player draws " << drawnMatches << std::endl;
+    std::cout << "Player drew " << drawnMatches << std::endl;
     matches -= drawnMatches;
 
+    displayMatches();
+}
+
+void aiTurn() {
+    int drawnMatches = 0;
+    switch (matches % 4) {
+        case 0:
+            drawnMatches = 3;
+            break;
+        case 1:
+            drawnMatches = std::rand() % 3 + 1;
+            std::cout << "random draw: " << drawnMatches << endl;
+            break;
+        case 2:
+            drawnMatches = 1;
+            break;
+        case 3:
+            drawnMatches = 2;
+            break;
+    }
+    std::cout << "AI drew " << drawnMatches << std::endl;
+
+    matches -= drawnMatches;
     displayMatches();
 }
 
@@ -45,7 +68,14 @@ int main() {
                 aiScore += 1;
                 break;
             }
-            
+
+            aiTurn();
+
+            if (matches < 1) {
+                std::cout << "Player won!" << endl;
+                playerScore += 1;
+                break;
+            }
         }
         break;
     }
