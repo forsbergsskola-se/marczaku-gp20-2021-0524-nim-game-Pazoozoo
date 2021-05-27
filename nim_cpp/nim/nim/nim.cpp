@@ -7,6 +7,7 @@ using namespace std;
 int playerScore = 0;
 int aiScore = 0;
 int matches = 24;
+int drawnMatches = 0;
 
 void displayMatches() {
     string matchesArt = "";
@@ -19,7 +20,6 @@ void displayMatches() {
 
 bool playerTurn() {
     std::cout << "Player, draw matches: [1, 2, or 3]" << std::endl;
-    int drawnMatches = 0;
     std::cin >> drawnMatches;
     drawnMatches = std::clamp(drawnMatches, 1, 3);
 
@@ -40,7 +40,6 @@ bool playerTurn() {
 }
 
 bool aiTurn() {
-    int drawnMatches = 0;
     switch (matches % 4) {
         case 0:
             drawnMatches = 3;
