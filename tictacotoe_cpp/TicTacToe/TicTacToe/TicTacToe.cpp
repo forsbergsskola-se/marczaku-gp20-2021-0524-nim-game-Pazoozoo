@@ -6,6 +6,7 @@ int board[9];
 void printBoard();
 void playerMove(int);
 bool winCheck(int);
+bool drawCheck();
 bool playAgain();
 void printBoardInt();
 
@@ -16,15 +17,15 @@ int main() {
             board[i] = 0;
         
         bool newTurn = true;
-        bool hasWon = true;
 
         while (true) {
             int player = newTurn ? 1 : 2;
 
             playerMove(player);
-            hasWon = winCheck(player);
+            bool hasWon = winCheck(player);
+            bool draw = drawCheck();
 
-            if (hasWon)
+            if (hasWon || draw)
                 break;
 
             newTurn = !newTurn;
@@ -150,4 +151,13 @@ bool winCheck(int player) {
     }
 
     return false;
+}
+
+bool drawCheck() {
+    for (int i = 0; i < 9; i++) {
+        if (board[i] == 0)
+            return false;
+    }
+    cout << "\nGame over, it's a draw!" << endl;
+    return true;
 }
