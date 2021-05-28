@@ -11,7 +11,7 @@ int drawnMatches = 0;
 bool playerTurn();
 bool aiTurn();
 bool playAgain();
-int playerInput(std::string message);
+int playerInput(std::string);
 void displayMatches();
 
 int main() {
