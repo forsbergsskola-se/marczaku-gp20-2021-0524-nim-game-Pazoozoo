@@ -2,28 +2,42 @@
 using namespace std;
 
 int board[9];
-bool newTurn = true;
 
 void printBoard();
 void playerMove(int);
 bool winCheck(int);
+bool playAgain();
 void printBoardInt();
 
 int main() {
-    cout << "Welcome to Tic Tac Toe! \nStarting game..." << endl;
-    bool hasWon = true;
     while (true) {
-        int player = newTurn ? 1 : 2;
+        cout << "Welcome to Tic Tac Toe! \nStarting game..." << endl;
+        for (int i = 0; i < 9; i++)
+            board[i] = 0;
+        
+        bool newTurn = true;
+        bool hasWon = true;
 
-        playerMove(player);
-        hasWon = winCheck(player);
+        while (true) {
+            int player = newTurn ? 1 : 2;
 
-        if (hasWon)
-            break;
+            playerMove(player);
+            hasWon = winCheck(player);
 
-        newTurn = !newTurn;
+            if (hasWon)
+                break;
+
+            newTurn = !newTurn;
+        }
+        printBoard();
+
+        bool newGame = playAgain();
+        if (newGame)
+            continue;
+
+        cout << "\nExiting game..." << endl;
+        break;
     }
-    printBoard();
 }
 
 void playerMove(int player) {
@@ -76,6 +90,20 @@ void printBoardInt() {
         }
         cout << "\n";
     }
+}
+
+bool playAgain() {
+    cout << "Play again? \n[1] yes \n[2] no" << endl;
+    int input = 0;
+    while (true) {
+        cin >> input;
+        if (input < 1 || input > 2) {
+            cout << "Invalid input: number must be 1 or 2 => ";
+            continue;
+        }
+        break;
+    }
+    return input == 1;
 }
 
 //TODO refactor this function
