@@ -2,7 +2,7 @@
 using namespace std;
 
 int board[9];
-bool player = 1;
+bool newTurn = true;
 
 void printBoard();
 void playerMove(int);
@@ -10,21 +10,20 @@ bool winCheck(int);
 void printBoardInt();
 
 int main() {
-    bool hasWon = 1;
+    cout << "Welcome to Tic Tac Toe! \nStarting game..." << endl;
+    bool hasWon = true;
     while (true) {
-        playerMove(1);
-        hasWon = winCheck(1);
+        int player = newTurn ? 1 : 2;
+
+        playerMove(player);
+        hasWon = winCheck(player);
 
         if (hasWon)
             break;
 
-        playerMove(2);
-        hasWon = winCheck(2);
-
-        if (hasWon)
-            break;
+        newTurn = !newTurn;
     }
-    printBoardInt();
+    printBoard();
 }
 
 void playerMove(int player) {
@@ -45,12 +44,11 @@ void playerMove(int player) {
         }
         break;
     }
-
     board[move] = player;
 }
 
 void printBoard() {
-    cout << "\n" << endl;
+    cout << "\n";
     for (int i = 0; i < 9; i += 3) {
         for (int j = i; j < i + 3; j++) {
             char mark = '#';
@@ -66,8 +64,10 @@ void printBoard() {
         }
         cout << "\n";
     }
+    cout << "\n";
 }
 
+//debug function to show board with int numbers
 void printBoardInt() {
     cout << "\n";
     for (int i = 0; i < 9; i += 3) {
@@ -78,47 +78,48 @@ void printBoardInt() {
     }
 }
 
+//TODO refactor this function
 bool winCheck(int player) {
     //top row
     if (board[0] == player && board[1] == player && board[2] == player) {
-        cout << "Player " << player << " won top row " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won top row!" << endl;
+        return true;
     }
     //mid row
     if (board[3] == player && board[4] == player && board[5] == player) {
-        cout << "Player " << player << " won middle row " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won middle row!" << endl;
+        return true;
     }
     //bot row
     if (board[6] == player && board[7] == player && board[8] == player) {
-        cout << "Player " << player << " won bot row " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won bot row!" << endl;
+        return true;
     }
     //left col
     if (board[0] == player && board[3] == player && board[6] == player) {
-        cout << "Player " << player << " won left column " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won left column!" << endl;
+        return true;
     }
     //mid col
     if (board[1] == player && board[4] == player && board[7] == player) {
-        cout << "Player " << player << " won middle column " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won middle column!" << endl;
+        return true;
     }
     //right col
     if (board[2] == player && board[5] == player && board[8] == player) {
-        cout << "Player " << player << " won right column " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won right column!" << endl;
+        return true;
     }
     //diagonal top left to bot right
     if (board[0] == player && board[4] == player && board[8] == player) {
-        cout << "Player " << player << " won diagonal " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won diagonal!" << endl;
+        return true;
     }
     //diagnoal top right to bot left
     if (board[2] == player && board[4] == player && board[6] == player) {
-        cout << "Player " << player << " won diagonal " << endl;
-        return 1;
+        cout << "\nPlayer " << player << " won diagonal!" << endl;
+        return true;
     }
 
-    return 0;
+    return false;
 }
