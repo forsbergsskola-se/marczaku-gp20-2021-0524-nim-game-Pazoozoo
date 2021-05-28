@@ -28,7 +28,9 @@ int main() {
         }
 
         std::cout << "\nScore: \n" << "  Player: " << playerScore << "\n  AI: " << aiScore << std::endl;
-        if (playAgain)
+        bool newGame = playAgain();
+
+        if (newGame)
             continue;
 
         std::cout << "\nExiting game..." << std::endl;
